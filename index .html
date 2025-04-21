@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swastik - womenwear</title>
+    <style>
+        /* ==== GLOBAL STYLES ==== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Playfair Display', serif;
+        }
+
+        body {
+            background-color: #000000;
+            color: #F5F5F5;
+            line-height: 1.7;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* ==== COLOR VARIABLES ==== */
+        :root {
+            --gold: #D4AF37;
+            --gold-light: #FFD700;
+            --gold-neon: rgba(255, 215, 0, 0.8);
+            --black: #000000;
+            --black-light: #121212;
+            --black-lighter: #1E1E1E;
+            --text: #F5F5F5;
+            --text-glow: rgba(245, 245, 245, 0.7);
+        }
+
+        /* ==== NEW ARRIVALS BANNER ==== */
+        .new-arrivals-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(to right, var(--black-light), var(--black-lighter));
+            color: var(--text);
+            padding: 15px;
+            display: none; /* Hidden by default */
+            align-items: center;
+            justify-content: space-between;
+            z-index: 2000;
+            border-bottom: 1px solid var(--gold);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            animation: slideDown 0.5s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+
+        .banner-content {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .banner-image {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid var(--gold);
+            margin-right: 20px;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .banner-text {
+            flex-grow: 1;
+        }
+
+        .banner-text h3 {
+            color: var(--gold-light);
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+            text-shadow: 0 0 5px var(--gold-neon);
+        }
+
+        .banner-text p {
+            font-size: 1rem;
+            margin-bottom: 10px;
+            color: var(--text);
+        }
+
+        .banner-btn {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.3), rgba(212, 175, 55, 0.2));
+            color: var(--gold);
+            padding: 10px 20px;
+            border: 1px solid var(--gold);
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-shadow: 0 0 5px var(--gold-neon);
+            white-space: nowrap;
+            margin-left: 20px;
+        }
+
+        .banner-btn:hover {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.4), rgba(212, 175, 55, 0.3));
+            color: var(--gold-light);
+            box-shadow: 0 0 15px var(--gold-neon);
+            transform: translateY(-2px);
+        }
+
+        .close-banner {
+            background: transparent;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0 10px;
+            transition: all 0.3s ease;
+            margin-left: 15px;
+        }
+
+        .close-banner:hover {
+            color: var(--gold-light);
+            transform: scale(1.2);
+        }
+
+        /* Adjust nav position when banner is visible */
+        body.has-banner nav {
+            top: 150px;
+        }
+
+        /* ==== NAVIGATION BAR ==== */
+        nav {
+            background: linear-gradient(to bottom, var(--black-light), rgba(18, 18, 18, 0.9));
+            padding: 15px 0;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--gold);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+            backdrop-filter: blur(5px);
+            transition: top 0.3s ease;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-img {
+            height: 60px;
+            width: auto;
+            filter: drop-shadow(0 0 5px var(--gold));
+            transition: all 0.3s ease;
+        }
+
+        .logo-img:hover {
+            filter: drop-shadow(0 0 10px var(--gold-light));
+            transform: scale(1.05);
+        }
+
+        .logo-text {
+            color: var(--gold);
+            font-size: 1.8rem;
+            margin-left: 10px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-shadow: 0 0 5px var(--gold-neon);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+            position: relative;
+        }
+
+        nav ul li a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            padding: 8px 15px;
+            position: relative;
+            text-shadow: 0 0 5px var(--text-glow);
+        }
+
+        nav ul li a:hover {
+            color: var(--gold-light);
+            text-shadow: 0 0 10px var(--gold-neon);
+        }
+
+        nav ul li a:before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gold);
+            transition: all 0.3s ease;
+            box-shadow: 0 0 5px var(--gold-neon);
+        }
+
+        nav ul li a:hover:before {
+            width: 100%;
+        }
+
+        nav ul li a.active {
+            color: var(--gold-light);
+            text-shadow: 0 0 10px var(--gold-neon);
+        }
+
+        nav ul li a.active:before {
+            width: 100%;
+        }
+
+        /* ==== HERO SECTION ==== */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.7)), 
+                        url('https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') center/cover;
+            height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 40px;
+            background: rgba(18, 18, 18, 0.7);
+            border-radius: 15px;
+            border: 1px solid var(--gold);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+            backdrop-filter: blur(5px);
+            transform: perspective(1000px) rotateX(0deg);
+            transition: all 0.5s ease;
+            z-index: 2;
+        }
+
+        .hero-content:hover {
+            transform: perspective(1000px) rotateX(5deg);
+            box-shadow: 0 0 50px rgba(212, 175, 55, 0.5);
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: var(--gold-light);
+            text-shadow: 0 0 10px var(--gold-neon);
+            letter-spacing: 2px;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            text-shadow: 0 0 5px var(--text-glow);
+        }
+
+        /* ==== BUTTONS ==== */
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.1));
+            color: var(--gold);
+            padding: 14px 28px;
+            text-decoration: none;
+            border-radius: 50px;
+            margin: 10px 5px;
+            transition: all 0.4s ease;
+            border: 1px solid var(--gold);
+            font-weight: 600;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+            text-shadow: 0 0 5px var(--gold-neon);
+        }
+
+        .btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.3), transparent);
+            transition: all 0.6s ease;
+        }
+
+        .btn:hover {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.3), rgba(212, 175, 55, 0.2));
+            color: var(--gold-light);
+            transform: translateY(-3px);
+            box-shadow: 0 0 20px var(--gold-neon);
+        }
+
+        .btn:hover:before {
+            left: 100%;
+        }
+
+        .btn-glow {
+            animation: btn-glow 2s infinite alternate;
+        }
+
+        @keyframes btn-glow {
+            0% { box-shadow: 0 0 10px rgba(212, 175, 55, 0.3); }
+            100% { box-shadow: 0 0 20px var(--gold-neon); }
+        }
+
+        /* ==== MAIN CONTENT ==== */
+        .main-content {
+            padding: 60px 20px;
+            flex-grow: 1;
+            background: linear-gradient(to bottom, var(--black), var(--black-light));
+        }
+
+        /* ==== PAGE TITLES ==== */
+        .page-title {
+            text-align: center;
+            margin-bottom: 50px;
+            color: var(--gold);
+            font-size: 2.8rem;
+            position: relative;
+            padding-bottom: 20px;
+            text-shadow: 0 0 10px var(--gold-neon);
+        }
+
+        .page-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 3px;
+            background: linear-gradient(to right, transparent, var(--gold), transparent);
+            border-radius: 3px;
+            box-shadow: 0 0 10px var(--gold-neon);
+        }
+
+        /* ==== PRODUCT GRID ==== */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .product-card {
+            background: linear-gradient(145deg, var(--black-light), var(--black-lighter));
+            padding: 25px;
+            border-radius: 15px;
+            transition: all 0.5s ease;
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+            transition: all 0.6s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(212, 175, 55, 0.2);
+            border: 1px solid var(--gold);
+        }
+
+        .product-card:hover:before {
+            left: 100%;
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            transition: all 0.5s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            filter: brightness(0.95);
+        }
+
+        .product-card:hover img {
+            transform: scale(1.03);
+            filter: brightness(1);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3);
+        }
+
+        .product-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--gold);
+            transition: all 0.3s ease;
+            text-shadow: 0 0 5px var(--gold-neon);
+        }
+
+        .product-card:hover h3 {
+            color: var(--gold-light);
+            text-shadow: 0 0 10px var(--gold-neon);
+        }
+
+        .product-card p {
+            color: var(--text);
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .price {
+            font-weight: bold;
+            color: var(--gold);
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        /* ==== ABOUT PAGE ==== */
+        .about-content {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+            background: linear-gradient(145deg, var(--black-light), var(--black-lighter));
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-content:before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.05) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .about-content p {
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            text-shadow: 0 0 5px var(--text-glow);
+        }
+
+        .about-img {
+            width: 100%;
+            max-width: 600px;
+            margin: 30px auto;
+            border-radius: 10px;
+            border: 1px solid var(--gold);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+            transition: all 0.5s ease;
+        }
+
+        .about-img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 30px var(--gold-neon);
+        }
+
+        /* ==== CONTACT PAGE ==== */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: linear-gradient(145deg, var(--black-light), var(--black-lighter));
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .contact-form input,
+        .contact-form textarea,
+        .contact-form select {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 8px;
+            background: var(--black);
+            color: var(--text);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus,
+        .contact-form select:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 15px var(--gold-neon);
+        }
+
+        .contact-form button[type="submit"] {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.3));
+            color: var(--gold);
+            border: 1px solid var(--gold);
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 5px var(--gold-neon);
+        }
+
+        .contact-form button[type="submit"]:hover {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.3), rgba(212, 175, 55, 0.4));
+            color: var(--gold-light);
+            box-shadow: 0 0 20px var(--gold-neon);
+            transform: translateY(-2px);
+        }
+
+        .contact-info {
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        .contact-info h3 {
+            color: var(--gold);
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            text-shadow: 0 0 10px var(--gold-neon);
+        }
+
+        .contact-info p {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .contact-info a {
+            color: var(--gold);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+            margin: 0 5px;
+        }
+
+        .contact-info a:hover {
+            color: var(--gold-light);
+            text-shadow: 0 0 10px var(--gold-neon);
+            transform: translateY(-2px);
+        }
+
+        .social-links {
+            margin-top: 30px;
+        }
+
+        .social-links a {
+            color: var(--text);
+            font-size: 1.5rem;
+            margin: 0 15px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .social-links a:hover {
+            color: var(--gold-light);
+            transform: translateY(-5px) scale(1.2);
+            text-shadow: 0 0 15px var(--gold-neon);
+        }
+
+        /* ==== FOOTER ==== */
+        footer {
+            background: linear-gradient(to bottom, var(--black-light), var(--black));
+            color: var(--text);
+            text-align: center;
+            padding: 50px 0 30px;
+            border-top: 1px solid var(--gold);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.1);
+            position: relative;
+        }
+
+        footer:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(to right, transparent, var(--gold), transparent);
+            box-shadow: 0 0 15px var(--gold-neon);
+        }
+
+        .footer-logo {
+            height: 80px;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 10px var(--gold-neon));
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .footer-links a {
+            color: var(--text);
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--gold-light);
+            text-shadow: 0 0 10px var(--gold-neon);
+        }
+
+        .copyright {
+            margin-top: 30px;
+            font-size: 0.9rem;
+            color: var(--text);
+            opacity: 0.8;
+        }
+
+        /* ==== PAGE MANAGEMENT ==== */
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        #home {
+            display: block;
+        }
+
+        /* ==== RESPONSIVE DESIGN ==== */
+        @media (max-width: 1200px) {
+            .banner-content {
+                padding: 0 20px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .page-title {
+                font-size: 2.4rem;
+            }
+            
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .banner-text h3 {
+                font-size: 1.3rem;
+            }
+            
+            body.has-banner nav {
+                top: 124px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                padding: 15px 0;
+            }
+            
+            .logo-container {
+                margin-bottom: 15px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 8px 12px;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            .btn {
+                padding: 12px 24px;
+                font-size: 0.9rem;
+            }
+            
+            .about-content,
+            .contact-form {
+                padding: 30px;
+            }
+            
+            .new-arrivals-banner {
+                flex-direction: column;
+                padding: 10px;
+                text-align: center;
+            }
+            
+            .banner-content {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .banner-image {
+                margin-right: 0;
+                margin-bottom: 10px;
+                width: 80px;
+                height: 80px;
+            }
+            
+            .banner-text {
+                margin-bottom: 10px;
+            }
+            
+            .banner-btn {
+                margin: 10px 0 0 0;
+            }
+            
+            .close-banner {
+                position: absolute;
+                top: 5px;
+                right: 5px;
+                margin-left: 0;
+            }
+            
+            body.has-banner nav {
+                top: 280px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero {
+                height: 80vh;
+            }
+            
+            .hero-content {
+                padding: 30px 20px;
+            }
+            
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .product-card {
+                padding: 20px;
+            }
+            
+            .product-card img {
+                height: 250px;
+            }
+            
+            .banner-text h3 {
+                font-size: 1.1rem;
+            }
+            
+            .banner-text p {
+                font-size: 0.8rem;
+            }
+            
+            body.has-banner nav {
+                top: 250px;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- New Arrivals Banner -->
+    <div class="new-arrivals-banner" id="newArrivalsBanner">
+        <div class="banner-content">
+            <img src="https://images.unsplash.com/photo-1551232864-3f0890e580d9?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="New Arrivals" class="banner-image">
+            <div class="banner-text">
+                <h3>NEW COLLECTION JUST ARRIVED!</h3>
+                <p>Discover our latest designer blouses with exclusive patterns and premium fabrics</p>
+            </div>
+            <a href="#" onclick="showPage('products')" class="banner-btn">SHOP NOW</a>
+        </div>
+        <button class="close-banner" onclick="closeBanner()">&times;</button>
+    </div>
+    
+    <!-- Navigation -->
+    <nav>
+        <div class="logo-container">
+            <img src="swastik (2).png" class="logo-img">
+            <div class="logo-text neon-text">Swastik</div>
+        </div>
+        <ul>
+            <li><a href="#" id="home-link" class="active" onclick="showPage('home')">Home</a></li>
+            <li><a href="#" id="products-link" onclick="showPage('products')">Collections</a></li>
+            <li><a href="#" id="about-link" onclick="showPage('about')">About</a></li>
+            <li><a href="#" id="contact-link" onclick="showPage('contact')">Contact</a></li>
+        </ul>
+    </nav>
+    
+    <!-- Home Page -->
+    <div id="home" class="page">
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="neon-text">Luxury Fashion for the Modern Woman</h1>
+                <p>Discover our exquisite collection of premium garments that blend tradition with contemporary elegance</p>
+                <a href="#" onclick="showPage('products')" class="btn btn-glow">Explore Collections</a>
+            </div>
+        </section>
+    </div>
+    
+    <!-- Products Page -->
+    <div id="products" class="page main-content">
+        <h2 class="page-title">Our <span class="neon-text">Collections</span></h2>
+        <div class="product-grid">
+            <!-- Product 1 -->
+            <div class="product-card">
+                <img src="1.jpeg" alt="Designer Kurti" id="product1-image">
+                <h3 class="neon-text">Designer blouse</h3>
+                <span class="price">₹850 </span>
+                <p>Handcrafted with premium fabrics and intricate embroidery</p>
+                <a href="#" class="btn" onclick="shareOnWhatsApp('Designer Kurtis',  '1.jpeg' , '₹850')">Order via WhatsApp</a>
+                <a href="https://www.instagram.com/swastik.womenwear?igsh=YzljYTk1ODg3Zg%3D%3D" class="btn">Order via Instagram</a>
+            </div>
+            <!-- Product 2 -->
+            <div class="product-card">
+                <img src="2.jpeg" alt="Designer Kurti" id="product1-image">
+                <h3 class="neon-text">Designer blouse</h3>
+                <span class="price">₹850 </span>
+                <p>Handcrafted with premium fabrics and intricate embroidery</p>
+                <a href="#" class="btn" onclick="shareOnWhatsApp('Designer Kurtis',  '1.jpeg' , '₹850')">Order via WhatsApp</a>
+                <a href="https://www.instagram.com/swastik.womenwear?igsh=YzljYTk1ODg3Zg%3D%3D" class="btn">Order via Instagram</a>
+            </div>
+            <!-- Product 3 -->
+            <div class="product-card">
+                <img src="3.jpeg" alt="Designer Kurti" id="product1-image">
+                <h3 class="neon-text">Designer blouse</h3>
+                <span class="price">₹850 </span>
+                <p>Handcrafted with premium fabrics and intricate embroidery</p>
+                <a href="#" class="btn" onclick="shareOnWhatsApp('Designer Kurtis',  '1.jpeg' , '₹850')">Order via WhatsApp</a>
+                <a href="https://www.instagram.com/swastik.womenwear?igsh=YzljYTk1ODg3Zg%3D%3D" class="btn">Order via Instagram</a>
+            </div>  
+            <!-- Product 4 -->
+            <div class="product-card">
+                <img src="4.jpeg" alt="Designer Kurti" id="product1-image">
+                <h3 class="neon-text">Designer blouse</h3>
+                <span class="price">₹850 </span>
+                <p>Handcrafted with premium fabrics and intricate embroidery</p>
+                <a href="#" class="btn" onclick="shareOnWhatsApp('Designer Kurtis',  '1.jpeg' , '₹850')">Order via WhatsApp</a>
+                <a href="https://www.instagram.com/swastik.womenwear?igsh=YzljYTk1ODg3Zg%3D%3D" class="btn">Order via Instagram</a>
+            </div>
+            <!-- Product 5 -->
+            <div class="product-card">
+                <img src="5.jpeg" alt="Designer Kurti" id="product1-image">
+                <h3 class="neon-text">Designer blouse</h3>
+                <span class="price">₹850 </span>
+                <p>Handcrafted with premium fabrics and intricate embroidery</p>
+                <a href="#" class="btn" onclick="shareOnWhatsApp('Designer Kurtis',  '1.jpeg' , '₹850')">Order via WhatsApp</a>
+                <a href="https://www.instagram.com/swastik.womenwear?igsh=YzljYTk1ODg3Zg%3D%3D" class="btn">Order via Instagram</a>
+            </div>
+            <!-- Product 6 -->
+            <div class="product-card">
+                <img src="6.jpeg" alt="Designer Kurti" id="product1-image">
+                <h3 class="neon-text">Designer blouse</h3>
+                <span class="price">₹850 </span>
+                <p>Handcrafted with premium fabrics and intricate embroidery</p>
+                <a href="#" class="btn" onclick="shareOnWhatsApp('Designer Kurtis',  '1.jpeg' , '₹850')">Order via WhatsApp</a>
+                <a href="https://www.instagram.com/swastik.womenwear?igsh=YzljYTk1ODg3Zg%3D%3D" class="btn">Order via Instagram</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- About Page -->
+    <div id="about" class="page main-content">
+        <h2 class="page-title">About <span class="neon-text">Us</span></h2>
+        <div class="about-content">
+            <p>Welcome to <span class="neon-text">Swastik</span>, where luxury meets tradition in women's fashion.</p>
+            <p>Established with a vision to redefine elegance, we curate exclusive collections that celebrate the modern Indian woman. Each piece in our collection is meticulously selected for its quality craftsmanship and timeless appeal.</p>
+            <p>Our philosophy centers around empowering women through fashion that makes them feel confident and beautiful, while staying true to their cultural roots.</p>
+            <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="Our Atelier" class="about-img">
+            <p>We work directly with skilled artisans across India to bring you authentic, high-quality garments that tell a story of tradition and craftsmanship.</p>
+            <a href="#" onclick="showPage('contact')" class="btn btn-glow">Get in Touch</a>
+        </div>
+    </div>
+    
+    <div id="contact" class="page main-content">
+        <h2 class="page-title">Contact <span class="neon-text">Us</span></h2>
+        <div class="contact-form">
+            <form>
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <input type="tel" placeholder="Your Phone Number">
+                <select required>
+                    <option value="" disabled selected>Select Inquiry Type</option>
+                    <option value="order">Order Inquiry</option>
+                    <option value="custom">Custom Order</option>
+                    <option value="general">General Question</option>
+                </select>
+                <textarea placeholder="Your Message" rows="5" required></textarea>
+                <button type="submit" class="btn btn-glow">Send Message</button>
+            </form>
+            
+            <div class="contact-info">
+                <h3 class="neon-text">Direct Contact</h3>
+                <p><i class="fas fa-phone-alt"></i> <a href="tel:+919333917019">+91 9333917019</a></p>
+                <p><i class="fas fa-envelope"></i> <a href="mailto:contact@swastik.com">contact@swastik.com</a></p>
+                <p><i class="fas fa-map-marker-alt"></i> 3/3 Nivedita Palace, Benachity, Durgapur</p>
+                
+                <div class="social-links">
+                    <a href="https://wa.me/919333917019"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://www.instagram.com/swastik.womenwear?igsh=YzljYTk1ODg3Zg%3D%3D"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/share/1AUpM6JquA/"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-pinterest"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <img src="swastik (2).png" alt="Swastik Logo" class="footer-logo">
+        <div class="social-links">
+            <a href="https://wa.me/919333917019"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://www.instagram.com/swastik.womenwear?igsh=YzljYTk1ODg3Zg%3D%3D"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.facebook.com/share/1AUpM6JquA/"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-pinterest"></i></a>
+        </div>
+        <p class="copyright">&copy; 2024 Swastik. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // Page Management
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.style.display = 'none';
+            });
+            
+            // Show selected page
+            document.getElementById(pageId).style.display = 'block';
+            
+            // Update active navigation link
+            document.querySelectorAll('nav ul li a').forEach(link => {
+                link.classList.remove('active');
+            });
+            document.getElementById(pageId + '-link').classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+        
+        // Initialize active page on load
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('home-link').classList.add('active');
+            
+            // Check if banner was previously closed
+            if (localStorage.getItem('bannerClosed') !== 'true') {
+                document.getElementById('welcomeBanner').style.display = 'flex';
+            }
+        });
+        
+        // Close banner function
+        function closeBanner() {
+            document.getElementById('welcomeBanner').style.display = 'none';
+            // Remember that banner was closed
+            localStorage.setItem('bannerClosed', 'true');
+        }
+        
+        // Add hover effect to all buttons
+        document.querySelectorAll('.btn').forEach(button => {
+            button.addEventListener('mouseenter', function() {
+                this.style.boxShadow = '0 0 20px var(--gold-neon)';
+            });
+            
+            button.addEventListener('mouseleave', function() {
+                this.style.boxShadow = '0 0 10px rgba(212, 175, 55, 0.3)';
+            });
+        });
+        
+        // Share product on WhatsApp
+        function shareOnWhatsApp(productName, productImage, productPrice) {
+            const message = `I'm interested in purchasing this ${productName} (Price: ${productPrice}). Can you provide more details?`;
+            const whatsappUrl = `https://wa.me/919333917019?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+    </script>
+</body>
+</html>
